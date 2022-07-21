@@ -4,11 +4,13 @@
   "description": "script to transform data from timeSheet pro to view for microsoft power BI",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Dmytro Slutskyi",
   "license": "ISC",
   "dependencies": {
+    "colors": "^1.4.0",
     "moment": "^2.29.4",
     "xlsx": "https://cdn.sheetjs.com/xlsx-0.18.9/xlsx-0.18.9.tgz"
   }
