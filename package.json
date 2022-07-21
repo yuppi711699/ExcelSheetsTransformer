@@ -1,0 +1,15 @@
+{
+  "name": "datatimesheettransformer",
+  "version": "1.0.0",
+  "description": "script to transform data from timeSheet pro to view for microsoft power BI",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dmytro Slutskyi",
+  "license": "ISC",
+  "dependencies": {
+    "moment": "^2.29.4",
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.18.9/xlsx-0.18.9.tgz"
+  }
+}
