@@ -30,10 +30,8 @@ function clearObjOfTask(){
 }
 for(let i = 2; i < endLineNumber; i++) {
     clearObjOfTask();
-    // console.log(workbook.Sheets.Export[`B${i}`].v)
     obj['Created By'] = workbook.Sheets.Export[`B${i}`].v;
     var day = moment(`${workbook.Sheets.Export[`F${i}`].v}`, "DD-MM-YYYY");
-    // console.log('day:', day)
     obj['Time (hh.mm)'] = workbook.Sheets.Export[`U${i}`].v;
     obj['Details'] = workbook.Sheets.Export[`L${i}`].v;
     obj['Client or partner name'] = workbook.Sheets.Export[`K${i}`].v;
@@ -41,10 +39,10 @@ for(let i = 2; i < endLineNumber; i++) {
     for (let j = 0; j < cellsWorkDay.length; j++) {
         if (workbook.Sheets.Export[`${cellsWorkDay[j]}${i}`].v) {
             let countWorkDayAtWeek = Number(workbook.Sheets.Export[`${cellsWorkDay[j]}${1}`].v.charAt(3));
-            // console.log(countWorkDayAtWeek)
-            day.add(countWorkDayAtWeek, 'days').calendar();
-            obj['Date and time of work'] = day._i;
-            // console.log(workbook.Sheets.Export[`${cellsWorkDay[j]}${1}`].v)
+            day.add(countWorkDayAtWeek, 'day').format("DD-MM-YYYY");
+            let workDate = (JSON.stringify(day._d)).slice(1, 11).replace( /-/g, "." )
+            workDate = String(workDate[8]) + String(workDate[9]) + '.' + workDate[5] + workDate[6] + '.' + workDate[0] + workDate[1] + workDate[2] + workDate[3];
+            obj['Date and time of work'] = workDate
         } 
     }
     content.push(obj);
