@@ -48,5 +48,5 @@ XLSX.utils.book_append_sheet(workbookk, worksheet, `Deca4 timesheet `);
 XLSX.utils.sheet_add_aoa(worksheet, [['Created By','Date and time of work','Time (hh.mm)','Details','Client or partner name']], { origin: "A1" });
 
 worksheet["!cols"] = [ { wch: 20} ];
-XLSX.writeFile(workbookk, "timesheet.xlsx");
+XLSX.writeFile(workbookk, fileOutputName);
 console.log(`Data in file`, `${fileInputName}`.green, `transformed and written in`, `${fileOutputName}`.green);
