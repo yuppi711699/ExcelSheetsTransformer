@@ -36,9 +36,7 @@ for(let i = 2; i < endLineNumber; i++) {
         if (workbook.Sheets.Export[`${cellsWorkDay[j]}${i}`].v) {
             let countWorkDayAtWeek = Number(workbook.Sheets.Export[`${cellsWorkDay[j]}${1}`].v.charAt(3));
             day.add(countWorkDayAtWeek, 'day').format("DD-MM-YYYY");
-            // let workDate = (JSON.stringify(day._d)).slice(1, 11).replace( /-/g, "/" )
-            // workDate = String(workDate[8]) + String(workDate[9]) + '.' + workDate[5] + workDate[6] + '.' + workDate[0] + workDate[1] + workDate[2] + workDate[3];
-            obj['Date and time of work'] = day._d //workDate
+            obj['Date and time of work'] = day._d 
         } 
     }
     content.push(obj);
@@ -52,4 +50,3 @@ XLSX.utils.sheet_add_aoa(worksheet, [['Created By','Date and time of work','Time
 worksheet["!cols"] = [ { wch: 20} ];
 XLSX.writeFile(workbookk, "timesheet.xlsx");
 console.log(`Data in file`, `${fileInputName}`.green, `transformed and written in`, `${fileOutputName}`.green);
-// console.log('endLineNumber:', endLineNumber)
