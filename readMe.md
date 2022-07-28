@@ -10,7 +10,8 @@ Usage:
 3. if you see next text in terminal: "Data in file export.xlsx transformed and written in outputTimesheet.xlsx", your transformed data is ready and include to "outputTimesheet.xlsx" file right in folder with project
 
 Update:
-way A:
+
+Way A:
     1. delete old project and download new from link (https://github.com/yuppi711699/ExcelSheetsTransformer)
 
-way B:
+Way B:
