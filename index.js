@@ -12,9 +12,13 @@ isNaN(endLineNumber[border])? border++ : '';
 endLineNumber = endLineNumber.slice(border, endLineNumber.length);
 
 const cellsWorkDay =['N',  'O', 'P', 'Q', 'R', 'S', 'T'];
-var day;
 const content =[ ];
 let obj = {};
+
+mutateData();
+makeDataForNewSheet();
+// createOutputFile();
+
 function clearObjOfTask(){
     obj = {
         'Created By': 0,
@@ -24,29 +28,34 @@ function clearObjOfTask(){
         'Client or partner name': ''
     }
 }
-for(let i = 2; i < endLineNumber; i++) {
-    clearObjOfTask();
-    obj['Created By'] = workbook.Sheets.Export[`B${i}`].v;
-    var day = moment(`${workbook.Sheets.Export[`F${i}`].v}`, "DD-MM-YYYY");
-    obj['Time (hh.mm)'] = workbook.Sheets.Export[`U${i}`].v;
-    obj['Details'] = workbook.Sheets.Export[`L${i}`].v;
-    obj['Client or partner name'] = workbook.Sheets.Export[`K${i}`].v;
-    if (workbook.Sheets.Export[`M${i}`]) obj['Details'] += ". " + workbook.Sheets.Export[`M${i}`].v;
-    for (let j = 0; j < cellsWorkDay.length; j++) {
-        if (workbook.Sheets.Export[`${cellsWorkDay[j]}${i}`].v) {
-            let countWorkDayAtWeek = Number(workbook.Sheets.Export[`${cellsWorkDay[j]}${1}`].v.charAt(3));
-            day.add(countWorkDayAtWeek, 'day').format("DD-MM-YYYY");
-            obj['Date and time of work'] = day._d 
-        } 
+function mutateData(){
+    for(let i = 2; i < endLineNumber; i++) {
+        clearObjOfTask();
+        obj['Created By'] = workbook.Sheets.Export[`B${i}`].v;
+        var day = moment(`${workbook.Sheets.Export[`F${i}`].v}`, "DD-MM-YYYY");
+        obj['Time (hh.mm)'] = workbook.Sheets.Export[`U${i}`].v;
+        obj['Details'] = workbook.Sheets.Export[`L${i}`].v;
+        obj['Client or partner name'] = workbook.Sheets.Export[`K${i}`].v;
+        if (workbook.Sheets.Export[`M${i}`]) obj['Details'] += ". " + workbook.Sheets.Export[`M${i}`].v;
+        for (let j = 0; j < cellsWorkDay.length; j++) {
+            if (workbook.Sheets.Export[`${cellsWorkDay[j]}${i}`].v) {
+                let countWorkDayAtWeek = Number(workbook.Sheets.Export[`${cellsWorkDay[j]}${1}`].v.charAt(3));
+                day.add(countWorkDayAtWeek, 'day').format("DD-MM-YYYY");
+                obj['Date and time of work'] = day._d 
+            } 
+        }
+        content.push(obj);
     }
-    content.push(obj);
 }
-
-const worksheet = XLSX.utils.json_to_sheet(content);
-const workbookk = XLSX.utils.book_new();
-XLSX.utils.book_append_sheet(workbookk, worksheet, `Deca4 timesheet `);
-XLSX.utils.sheet_add_aoa(worksheet, [['Created By','Date and time of work','Time (hh.mm)','Details','Client or partner name']], { origin: "A1" });
-
-worksheet["!cols"] = [ { wch: 20} ];
-XLSX.writeFile(workbookk, fileOutputName);
-console.log(`Data in file`, `${fileInputName}`.green, `transformed and written in`, `${fileOutputName}`.green);
+function makeDataForNewSheet(){
+    const worksheet = XLSX.utils.json_to_sheet(content);
+    const newWorkbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(newWorkbook, worksheet, `Deca4 timesheet `);
+    XLSX.utils.sheet_add_aoa(worksheet, [['Created By','Date and time of work','Time (hh.mm)','Details','Client or partner name']], { origin: "A1" });
+    worksheet["!cols"] = [ { wch: 15},  {width: 15},  {width: 10},  {width: 25},  {width: 20},  {width: 20}, ];
+    createOutputFile(newWorkbook);
+}
+function createOutputFile(newWorkbook){
+    XLSX.writeFile(newWorkbook, fileOutputName);
+    console.log(`Data in file`, `${fileInputName}`.green, `transformed and written in`, `${fileOutputName}`.green);
+}
